@@ -1,98 +1,102 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <View style={styles.header}>
+        <Text style={styles.welcomeText}>Welcome back!</Text>
+        <Text style={styles.subText}>Everything you need is right here.</Text>
+      </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      <View style={styles.introCard}>
+        <View style={styles.iconCircle}>
+          <Ionicons name="rocket-outline" size={32} color="#fff" />
+        </View>
+        <Text style={styles.cardTitle}>Getting Started</Text>
+        <Text style={styles.cardDescription}>
+          This application helps you manage your products and view your gallery with a seamless native experience.
+        </Text>
+      </View>
+
+      <Link href="/products" asChild>
+        <TouchableOpacity style={styles.mainButton} activeOpacity={0.8}>
+          <Text style={styles.buttonText}>Explore Products</Text>
+          <Ionicons name="arrow-forward" size={20} color="#fff" />
+        </TouchableOpacity>
+      </Link>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
   },
-  stepContainer: {
-    gap: 8,
+  content: {
+    padding: 24,
+    paddingTop: 60, // Extra padding since we hid the native header
+  },
+  header: {
+    marginBottom: 40,
+  },
+  welcomeText: {
+    fontFamily: 'AppBold', // Using the Google Font you set up
+    fontSize: 32,
+    color: '#1A1A1A',
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  subText: {
+    fontSize: 16,
+    color: '#666',
+    lineHeight: 22,
+  },
+  introCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
+    marginBottom: 30,
+  },
+  iconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#007AFF', // Clean iOS Blue
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  cardTitle: {
+    fontFamily: 'AppBold',
+    fontSize: 20,
+    color: '#1A1A1A',
+    marginBottom: 10,
+  },
+  cardDescription: {
+    fontSize: 15,
+    color: '#555',
+    lineHeight: 24,
+  },
+  mainButton: {
+    backgroundColor: '#1A1A1A',
+    flexDirection: 'row',
+    height: 56,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
