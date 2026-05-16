@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 15,
+    paddingTop: 30,
   },
   headerTitle: {
     fontFamily: 'Inter', // Using your Google Font
